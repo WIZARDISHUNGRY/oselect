@@ -8,6 +8,10 @@ import (
 
 func genSelectCall(count int, withDefault bool, withOk bool) (n ast.Node) {
 
+	var (
+		defaultFunction = ast.NewIdent("df")
+	)
+
 	name := fmt.Sprintf("Select%d", count)
 
 	if withDefault {
@@ -32,7 +36,7 @@ func genSelectCall(count int, withDefault bool, withOk bool) (n ast.Node) {
 		fxnArgs := []*ast.Field{
 			{
 				Names: []*ast.Ident{
-					ast.NewIdent(fmt.Sprintf("v%d", i)),
+					// ast.NewIdent(fmt.Sprintf("v%d", i)),
 				},
 				Type: ast.NewIdent(fmt.Sprintf("T%d", i)),
 			},
@@ -40,7 +44,7 @@ func genSelectCall(count int, withDefault bool, withOk bool) (n ast.Node) {
 		if withOk {
 			fxnArgs = append(fxnArgs, &ast.Field{
 				Names: []*ast.Ident{
-					ast.NewIdent("ok"),
+					// ast.NewIdent("ok"),
 				},
 				Type: ast.NewIdent("bool"),
 			})
@@ -108,7 +112,7 @@ func genSelectCall(count int, withDefault bool, withOk bool) (n ast.Node) {
 				&ast.CommClause{
 					Comm: nil, // default
 					Body: []ast.Stmt{
-						&ast.ExprStmt{X: &ast.CallExpr{Fun: ast.NewIdent("df")}},
+						&ast.ExprStmt{X: &ast.CallExpr{Fun: defaultFunction}},
 					},
 				},
 			)
@@ -120,7 +124,7 @@ func genSelectCall(count int, withDefault bool, withOk bool) (n ast.Node) {
 	if withDefault {
 		params.List = append(params.List,
 			&ast.Field{
-				Names: []*ast.Ident{ast.NewIdent("df")},
+				Names: []*ast.Ident{defaultFunction},
 				Type: &ast.FuncType{
 					Params: &ast.FieldList{
 						List: nil,
