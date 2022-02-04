@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"go/ast"
 	"go/token"
+
+	"golang.org/x/tools/go/ast/astutil"
 )
 
-func genSelectCall(count int, withDefault bool, withOk bool) (n ast.Node) {
+func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool) *ast.FuncDecl {
 
 	var (
 		defaultFunction = ast.NewIdent("df")
@@ -35,17 +37,11 @@ func genSelectCall(count int, withDefault bool, withOk bool) (n ast.Node) {
 
 		fxnArgs := []*ast.Field{
 			{
-				Names: []*ast.Ident{
-					// ast.NewIdent(fmt.Sprintf("v%d", i)),
-				},
 				Type: ast.NewIdent(fmt.Sprintf("T%d", i)),
 			},
 		}
 		if withOk {
 			fxnArgs = append(fxnArgs, &ast.Field{
-				Names: []*ast.Ident{
-					// ast.NewIdent("ok"),
-				},
 				Type: ast.NewIdent("bool"),
 			})
 		}
@@ -140,6 +136,12 @@ func genSelectCall(count int, withDefault bool, withOk bool) (n ast.Node) {
 			Params:     params,
 			TypeParams: &ast.FieldList{List: []*ast.Field{typeParams}},
 		},
+		// Pain in the ass!
+		// Doc: &ast.CommentGroup{
+		// 	List: []*ast.Comment{
+		// 		{Text: fmt.Sprintf("// %s", name), Slash: token.NoPos},
+		// 	},
+		// },
 		Body: body,
 	}
 }
