@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main2() {
 
 	{ // ordering is stable
 		ch1 := make(chan string, 1)
