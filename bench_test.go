@@ -7,14 +7,14 @@ import (
 func nothing(int) {}
 func nada()       {}
 
-func BenchmarkSelect4Default(b *testing.B) {
+func BenchmarkRecv4Default(b *testing.B) {
 	chan0 := make(chan int)
 	chan1 := make(chan int)
 	chan2 := make(chan int)
 	chan3 := make(chan int)
 
 	for n := 0; n < b.N; n++ {
-		Select4Default(
+		Recv4Default(
 			chan0, nothing,
 			chan1, nothing,
 			chan2, nothing,
@@ -74,7 +74,7 @@ func Benchmark_select_4_default(b *testing.B) {
 	}
 }
 
-func BenchmarkSelect4(b *testing.B) {
+func BenchmarkRecv4(b *testing.B) {
 	chan0 := make(chan int)
 	chan1 := make(chan int)
 	chan2 := make(chan int)
@@ -84,7 +84,7 @@ func BenchmarkSelect4(b *testing.B) {
 
 		chan3 <- 1
 
-		Select4(
+		Recv4(
 			chan0, nothing,
 			chan1, nothing,
 			chan2, nothing,

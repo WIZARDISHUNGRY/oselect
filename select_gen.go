@@ -2,7 +2,7 @@
 
 package oselect
 
-func Select2[T0, T1 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1)) {
+func Recv2[T0, T1 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1)) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -16,7 +16,7 @@ func Select2[T0, T1 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1)) {
 		f1(v1)
 	}
 }
-func Select2Default[T0, T1 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), df func()) {
+func Recv2Default[T0, T1 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), df func()) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -32,7 +32,7 @@ func Select2Default[T0, T1 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func
 		df()
 	}
 }
-func Select2OK[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool)) {
+func Recv2OK[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -46,7 +46,7 @@ func Select2OK[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 fun
 		f1(v1, ok)
 	}
 }
-func Select2DefaultOK[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), df func()) {
+func Recv2DefaultOK[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -62,7 +62,31 @@ func Select2DefaultOK[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1,
 		df()
 	}
 }
-func Select3[T0, T1, T2 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2)) {
+func Send2[T0, T1 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	}
+}
+func Send2Default[T0, T1 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, df func()) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	default:
+		df()
+	}
+}
+func Recv3[T0, T1, T2 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2)) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -87,7 +111,7 @@ func Select3[T0, T1, T2 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1
 		f2(v2)
 	}
 }
-func Select3Default[T0, T1, T2 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), df func()) {
+func Recv3Default[T0, T1, T2 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), df func()) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -114,7 +138,7 @@ func Select3Default[T0, T1, T2 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 
 		df()
 	}
 }
-func Select3OK[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool)) {
+func Recv3OK[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -139,7 +163,7 @@ func Select3OK[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1
 		f2(v2, ok)
 	}
 }
-func Select3DefaultOK[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), df func()) {
+func Recv3DefaultOK[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -166,7 +190,47 @@ func Select3DefaultOK[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan
 		df()
 	}
 }
-func Select4[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3)) {
+func Send3[T0, T1, T2 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	}
+}
+func Send3Default[T0, T1, T2 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, df func()) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	default:
+		df()
+	}
+}
+func Recv4[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3)) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -205,7 +269,7 @@ func Select4[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 fun
 		f3(v3)
 	}
 }
-func Select4Default[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), df func()) {
+func Recv4Default[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), df func()) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -246,7 +310,7 @@ func Select4Default[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1,
 		df()
 	}
 }
-func Select4OK[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool)) {
+func Recv4OK[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -285,7 +349,7 @@ func Select4OK[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1
 		f3(v3, ok)
 	}
 }
-func Select4DefaultOK[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), df func()) {
+func Recv4DefaultOK[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -326,7 +390,67 @@ func Select4DefaultOK[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-
 		df()
 	}
 }
-func Select5[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4)) {
+func Send4[T0, T1, T2, T3 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	}
+}
+func Send4Default[T0, T1, T2, T3 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, df func()) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	default:
+		df()
+	}
+}
+func Recv5[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4)) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -382,7 +506,7 @@ func Select5[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1
 		f4(v4)
 	}
 }
-func Select5Default[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), df func()) {
+func Recv5Default[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), df func()) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -440,7 +564,7 @@ func Select5Default[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0), c1 <-chan
 		df()
 	}
 }
-func Select5OK[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool)) {
+func Recv5OK[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -496,7 +620,7 @@ func Select5OK[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c1 <-cha
 		f4(v4, ok)
 	}
 }
-func Select5DefaultOK[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), df func()) {
+func Recv5DefaultOK[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -554,7 +678,91 @@ func Select5DefaultOK[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c
 		df()
 	}
 }
-func Select6[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5)) {
+func Send5[T0, T1, T2, T3, T4 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, c4 chan<- T4, f4 func() T4) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	case c4 <- f4():
+	}
+}
+func Send5Default[T0, T1, T2, T3, T4 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, c4 chan<- T4, f4 func() T4, df func()) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	case c4 <- f4():
+	default:
+		df()
+	}
+}
+func Recv6[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5)) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -630,7 +838,7 @@ func Select6[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1
 		f5(v5)
 	}
 }
-func Select6Default[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), df func()) {
+func Recv6Default[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), df func()) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -708,7 +916,7 @@ func Select6Default[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0), c1 <-
 		df()
 	}
 }
-func Select6OK[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool)) {
+func Recv6OK[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -784,7 +992,7 @@ func Select6OK[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool), c1 <
 		f5(v5, ok)
 	}
 }
-func Select6DefaultOK[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), df func()) {
+func Recv6DefaultOK[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -862,7 +1070,119 @@ func Select6DefaultOK[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool
 		df()
 	}
 }
-func Select7[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6)) {
+func Send6[T0, T1, T2, T3, T4, T5 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, c4 chan<- T4, f4 func() T4, c5 chan<- T5, f5 func() T5) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	case c4 <- f4():
+	case c5 <- f5():
+	}
+}
+func Send6Default[T0, T1, T2, T3, T4, T5 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, c4 chan<- T4, f4 func() T4, c5 chan<- T5, f5 func() T5, df func()) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	case c4 <- f4():
+	case c5 <- f5():
+	default:
+		df()
+	}
+}
+func Recv7[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6)) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -961,7 +1281,7 @@ func Select7[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0), c1 <-cha
 		f6(v6)
 	}
 }
-func Select7Default[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6), df func()) {
+func Recv7Default[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6), df func()) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -1062,7 +1382,7 @@ func Select7Default[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0), c
 		df()
 	}
 }
-func Select7OK[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool)) {
+func Recv7OK[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -1161,7 +1481,7 @@ func Select7OK[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, bool), 
 		f6(v6, ok)
 	}
 }
-func Select7DefaultOK[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), df func()) {
+func Recv7DefaultOK[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -1262,7 +1582,151 @@ func Select7DefaultOK[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, 
 		df()
 	}
 }
-func Select8[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6), c7 <-chan T7, f7 func(T7)) {
+func Send7[T0, T1, T2, T3, T4, T5, T6 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, c4 chan<- T4, f4 func() T4, c5 chan<- T5, f5 func() T5, c6 chan<- T6, f6 func() T6) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	case c4 <- f4():
+	case c5 <- f5():
+	case c6 <- f6():
+	}
+}
+func Send7Default[T0, T1, T2, T3, T4, T5, T6 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, c4 chan<- T4, f4 func() T4, c5 chan<- T5, f5 func() T5, c6 chan<- T6, f6 func() T6, df func()) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	case c4 <- f4():
+	case c5 <- f5():
+	case c6 <- f6():
+	default:
+		df()
+	}
+}
+func Recv8[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6), c7 <-chan T7, f7 func(T7)) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -1387,7 +1851,7 @@ func Select8[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0), c1 <
 		f7(v7)
 	}
 }
-func Select8Default[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6), c7 <-chan T7, f7 func(T7), df func()) {
+func Recv8Default[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6), c7 <-chan T7, f7 func(T7), df func()) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -1514,7 +1978,7 @@ func Select8Default[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0
 		df()
 	}
 }
-func Select8OK[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool)) {
+func Recv8OK[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -1639,7 +2103,7 @@ func Select8OK[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0, boo
 		f7(v7, ok)
 	}
 }
-func Select8DefaultOK[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), df func()) {
+func Recv8DefaultOK[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -1766,7 +2230,187 @@ func Select8DefaultOK[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(
 		df()
 	}
 }
-func Select9[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6), c7 <-chan T7, f7 func(T7), c8 <-chan T8, f8 func(T8)) {
+func Send8[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, c4 chan<- T4, f4 func() T4, c5 chan<- T5, f5 func() T5, c6 chan<- T6, f6 func() T6, c7 chan<- T7, f7 func() T7) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	case c6 <- f6():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	case c4 <- f4():
+	case c5 <- f5():
+	case c6 <- f6():
+	case c7 <- f7():
+	}
+}
+func Send8Default[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, c4 chan<- T4, f4 func() T4, c5 chan<- T5, f5 func() T5, c6 chan<- T6, f6 func() T6, c7 chan<- T7, f7 func() T7, df func()) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	case c6 <- f6():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	case c4 <- f4():
+	case c5 <- f5():
+	case c6 <- f6():
+	case c7 <- f7():
+	default:
+		df()
+	}
+}
+func Recv9[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6), c7 <-chan T7, f7 func(T7), c8 <-chan T8, f8 func(T8)) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -1920,7 +2564,7 @@ func Select9[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0), 
 		f8(v8)
 	}
 }
-func Select9Default[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6), c7 <-chan T7, f7 func(T7), c8 <-chan T8, f8 func(T8), df func()) {
+func Recv9Default[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1), c2 <-chan T2, f2 func(T2), c3 <-chan T3, f3 func(T3), c4 <-chan T4, f4 func(T4), c5 <-chan T5, f5 func(T5), c6 <-chan T6, f6 func(T6), c7 <-chan T7, f7 func(T7), c8 <-chan T8, f8 func(T8), df func()) {
 	select {
 	case v0 := <-c0:
 		f0(v0)
@@ -2076,7 +2720,7 @@ func Select9Default[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 fun
 		df()
 	}
 }
-func Select9OK[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), c8 <-chan T8, f8 func(T8, bool)) {
+func Recv9OK[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), c8 <-chan T8, f8 func(T8, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -2230,7 +2874,7 @@ func Select9OK[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0,
 		f8(v8, ok)
 	}
 }
-func Select9DefaultOK[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), c8 <-chan T8, f8 func(T8, bool), df func()) {
+func Recv9DefaultOK[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), c8 <-chan T8, f8 func(T8, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -2382,6 +3026,226 @@ func Select9DefaultOK[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 f
 		f7(v7, ok)
 	case v8, ok := <-c8:
 		f8(v8, ok)
+	default:
+		df()
+	}
+}
+func Send9[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, c4 chan<- T4, f4 func() T4, c5 chan<- T5, f5 func() T5, c6 chan<- T6, f6 func() T6, c7 chan<- T7, f7 func() T7, c8 chan<- T8, f8 func() T8) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	case c6 <- f6():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	case c6 <- f6():
+		return
+	case c7 <- f7():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	case c4 <- f4():
+	case c5 <- f5():
+	case c6 <- f6():
+	case c7 <- f7():
+	case c8 <- f8():
+	}
+}
+func Send9Default[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func() T1, c2 chan<- T2, f2 func() T2, c3 chan<- T3, f3 func() T3, c4 chan<- T4, f4 func() T4, c5 chan<- T5, f5 func() T5, c6 chan<- T6, f6 func() T6, c7 chan<- T7, f7 func() T7, c8 chan<- T8, f8 func() T8, df func()) {
+	select {
+	case c0 <- f0():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	case c6 <- f6():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+		return
+	case c1 <- f1():
+		return
+	case c2 <- f2():
+		return
+	case c3 <- f3():
+		return
+	case c4 <- f4():
+		return
+	case c5 <- f5():
+		return
+	case c6 <- f6():
+		return
+	case c7 <- f7():
+		return
+	default:
+	}
+	select {
+	case c0 <- f0():
+	case c1 <- f1():
+	case c2 <- f2():
+	case c3 <- f3():
+	case c4 <- f4():
+	case c5 <- f5():
+	case c6 <- f6():
+	case c7 <- f7():
+	case c8 <- f8():
 	default:
 		df()
 	}

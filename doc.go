@@ -48,7 +48,7 @@
 		func busyLoop(ctx context.Context, uiMessages, ircMessages, twitterMessages chan <-any) {
 			for {
 				var done bool
-				Select4(
+				Recv4(
 					ctx.Done(), func() { done = true },
 					uiMessages, dispatchEvent,
 					ircMessages, uiMessages,

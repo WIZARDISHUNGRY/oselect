@@ -8,13 +8,24 @@ import (
 	"golang.org/x/tools/go/ast/astutil"
 )
 
-func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool) *ast.FuncDecl {
+func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, isSend bool) *ast.FuncDecl {
 
 	var (
 		defaultFunction = ast.NewIdent("df")
 	)
 
-	name := fmt.Sprintf("Select%d", count)
+	if isSend && withOk {
+		panic("isSend && withOk")
+	}
+
+	direction := ast.ChanDir(ast.RECV)
+
+	name := "Recv"
+	if isSend {
+		direction = ast.SEND
+		name = "Send"
+	}
+	name = fmt.Sprintf("%s%d", name, count)
 
 	if withDefault {
 		name += "Default"
@@ -46,10 +57,15 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool) 
 			})
 		}
 
+		var results []*ast.Field
+		if isSend {
+			results, fxnArgs = fxnArgs, results
+		}
+
 		params.List = append(params.List, &ast.Field{
 			Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("c%d", i))},
 			Type: &ast.ChanType{
-				Dir:   ast.RECV,
+				Dir:   direction,
 				Value: ast.NewIdent(fmt.Sprintf("T%d", i)),
 			},
 		},
@@ -58,6 +74,9 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool) 
 				Type: &ast.FuncType{
 					Params: &ast.FieldList{
 						List: fxnArgs,
+					},
+					Results: &ast.FieldList{
+						List: results,
 					},
 				},
 			},
@@ -76,18 +95,32 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool) 
 				args = append(args, boolean)
 			}
 
-			clause := &ast.CommClause{
-				Comm: &ast.AssignStmt{
-					Lhs: args,
-					Tok: token.DEFINE,
-					Rhs: []ast.Expr{&ast.UnaryExpr{Op: token.ARROW, X: channel}},
-				},
-				Body: []ast.Stmt{
-					&ast.ExprStmt{X: &ast.CallExpr{
-						Fun:  fxn,
-						Args: args,
-					}},
-				},
+			var clause *ast.CommClause
+
+			if isSend {
+				clause = &ast.CommClause{
+					Comm: &ast.AssignStmt{
+						Lhs: []ast.Expr{channel},
+						Tok: token.ARROW,
+						Rhs: []ast.Expr{&ast.CallExpr{
+							Fun: fxn,
+						}},
+					},
+				}
+			} else {
+				clause = &ast.CommClause{
+					Comm: &ast.AssignStmt{
+						Lhs: args,
+						Tok: token.DEFINE,
+						Rhs: []ast.Expr{&ast.UnaryExpr{Op: token.ARROW, X: channel}},
+					},
+					Body: []ast.Stmt{
+						&ast.ExprStmt{X: &ast.CallExpr{
+							Fun:  fxn,
+							Args: args,
+						}},
+					},
+				}
 			}
 
 			if !isLast {
