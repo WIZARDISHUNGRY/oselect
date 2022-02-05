@@ -23,8 +23,8 @@ func BenchmarkRecv4Default(b *testing.B) {
 		)
 	}
 }
-func Benchmark_select_4_default(b *testing.B) {
 
+func Benchmark_select_4_default(b *testing.B) {
 	chan0 := make(chan int)
 	chan1 := make(chan int)
 	chan2 := make(chan int)
@@ -92,6 +92,7 @@ func BenchmarkRecv4(b *testing.B) {
 		)
 	}
 }
+
 func Benchmark_select_4(b *testing.B) {
 	chan0 := make(chan int)
 	chan1 := make(chan int)
