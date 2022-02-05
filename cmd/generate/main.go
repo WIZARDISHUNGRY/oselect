@@ -16,7 +16,6 @@ import (
 const MAX_CHANNELS = 9
 
 func main() {
-
 	flag.Parse()
 	args := flag.Args()
 	if len(args) > 1 {
@@ -61,9 +60,7 @@ func main() {
 		return true
 	})
 
-	var (
-		outStream io.Writer
-	)
+	var outStream io.Writer
 
 	if len(args) > 0 {
 		out := args[0]

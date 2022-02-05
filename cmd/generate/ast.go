@@ -9,10 +9,7 @@ import (
 )
 
 func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, isSend bool) *ast.FuncDecl {
-
-	var (
-		defaultFunction = ast.NewIdent("df")
-	)
+	defaultFunction := ast.NewIdent("df")
 
 	if isSend && withOk {
 		panic("isSend && withOk")
