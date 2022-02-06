@@ -6,7 +6,7 @@ arbitrary channel types.
 
 [![Go Reference](https://pkg.go.dev/badge/jonwillia.ms/oselect.svg)](https://pkg.go.dev/jonwillia.ms/oselect)
 
-# FAQ
+## FAQ
 
 1. Why can't you mix and match sends and receives?
 
@@ -34,6 +34,7 @@ oselect.Select4(
     oselect.Send(metricsChan, getMetrics),
 )
 ```
+
     I don't hate this as much as I originally expected. Performance implications TBD!
 
 2. Would [variadic templates](https://www.ibm.com/docs/en/zos/2.1.0?topic=only-variadic-templates-c11)
