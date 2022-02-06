@@ -47,9 +47,8 @@ func main() {
 			c.Delete()
 			for i := 2; i <= MAX_CHANNELS; i++ {
 				// Select
-				c.InsertBefore(genSelectCall(c, i, false, false, typeSelect))
-				c.InsertBefore(genSelectCall(c, i, true, false, typeSelect))
-				continue
+				c.InsertBefore(genSelectCall(c, i, false, true, typeSelect))
+				c.InsertBefore(genSelectCall(c, i, true, true, typeSelect))
 				// Recv
 				c.InsertBefore(genSelectCall(c, i, false, false, typeRecv))
 				c.InsertBefore(genSelectCall(c, i, true, false, typeRecv))

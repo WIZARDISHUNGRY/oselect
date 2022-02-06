@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go/ast"
+	"go/parser"
 	"go/token"
 
 	"golang.org/x/tools/go/ast/astutil"
@@ -18,23 +19,36 @@ const (
 	typeSelect
 )
 
+var names = map[functionType]string{
+	typeRecv:   "Recv",
+	typeSend:   "Send",
+	typeSelect: "Select",
+}
+
+func mustParseExp(s string) ast.Expr {
+	expr, err := parser.ParseExpr(s)
+	if err != nil {
+		panic(fmt.Sprintf("mustParseExp(%s): %s", s, err.Error()))
+	}
+	return expr
+}
+
 func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, fxnType functionType) *ast.FuncDecl {
 	defaultFunction := ast.NewIdent("df")
 
 	isSend := fxnType == typeSend
 
-	if fxnType != typeRecv && withOk {
-		panic("fxnType != typeRecv && withOk")
+	if isSend && withOk {
+		panic("isSend && withOk")
 	}
 
 	direction := ast.ChanDir(ast.RECV)
 
-	name := "Recv"
+	name := names[fxnType]
 	if isSend {
 		direction = ast.SEND
-		name = "Send"
 	}
-	if withOk {
+	if withOk && fxnType == typeRecv {
 		name += "OK"
 	}
 
@@ -72,25 +86,34 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, 
 			results, fxnArgs = fxnArgs, results
 		}
 
-		params.List = append(params.List, &ast.Field{
-			Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("c%d", i))},
-			Type: &ast.ChanType{
-				Dir:   direction,
-				Value: ast.NewIdent(fmt.Sprintf("T%d", i)),
-			},
-		},
-			&ast.Field{
-				Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("f%d", i))},
-				Type: &ast.FuncType{
-					Params: &ast.FieldList{
-						List: fxnArgs,
-					},
-					Results: &ast.FieldList{
-						List: results,
-					},
+		if fxnType == typeSelect {
+			typeExpr := mustParseExp(fmt.Sprintf("Param[T%d]", i))
+
+			params.List = append(params.List, &ast.Field{
+				Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("p%d", i))},
+				Type:  typeExpr,
+			})
+		} else {
+			params.List = append(params.List, &ast.Field{
+				Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("c%d", i))},
+				Type: &ast.ChanType{
+					Dir:   direction,
+					Value: ast.NewIdent(fmt.Sprintf("T%d", i)),
 				},
 			},
-		)
+				&ast.Field{
+					Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("f%d", i))},
+					Type: &ast.FuncType{
+						Params: &ast.FieldList{
+							List: fxnArgs,
+						},
+						Results: &ast.FieldList{
+							List: results,
+						},
+					},
+				},
+			)
+		}
 
 		typeParams.Names = append(typeParams.Names, ast.NewIdent(fmt.Sprintf("T%d", i)))
 
@@ -99,16 +122,17 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, 
 			channel := ast.NewIdent(fmt.Sprintf("c%d", j))
 			fxn := ast.NewIdent(fmt.Sprintf("f%d", j))
 			boolean := ast.NewIdent("ok")
+			param := fmt.Sprintf("p%d", j)
 
 			args := []ast.Expr{val}
 			if withOk {
 				args = append(args, boolean)
 			}
 
-			var clause *ast.CommClause
+			var clauses []*ast.CommClause
 
-			if isSend {
-				clause = &ast.CommClause{
+			if fxnType == typeSend {
+				clauses = []*ast.CommClause{{
 					Comm: &ast.AssignStmt{
 						Lhs: []ast.Expr{channel},
 						Tok: token.ARROW,
@@ -116,9 +140,9 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, 
 							Fun: fxn,
 						}},
 					},
-				}
-			} else {
-				clause = &ast.CommClause{
+				}}
+			} else if fxnType == typeRecv {
+				clauses = []*ast.CommClause{{
 					Comm: &ast.AssignStmt{
 						Lhs: args,
 						Tok: token.DEFINE,
@@ -130,14 +154,40 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, 
 							Args: args,
 						}},
 					},
+				}}
+			} else if fxnType == typeSelect {
+				clauses = []*ast.CommClause{{
+					Comm: &ast.AssignStmt{
+						Lhs: []ast.Expr{mustParseExp(param + ".SendChan")},
+						Tok: token.ARROW,
+						Rhs: []ast.Expr{mustParseExp(param + ".SendFunc()")},
+					},
+				}, {
+					Comm: &ast.AssignStmt{
+						Lhs: args,
+						Tok: token.DEFINE,
+						Rhs: []ast.Expr{&ast.UnaryExpr{Op: token.ARROW, X: mustParseExp(param + ".RecvChan")}},
+					},
+					Body: []ast.Stmt{
+						&ast.ExprStmt{X: &ast.CallExpr{
+							Fun:  mustParseExp(param + ".RecvFunc"),
+							Args: args,
+						}},
+					},
+				},
 				}
 			}
 
 			if !isLast {
-				clause.Body = append(clause.Body, &ast.ReturnStmt{})
+				for _, clause := range clauses {
+					clause.Body = append(clause.Body, &ast.ReturnStmt{})
+				}
 			}
 
-			selectStmt.Body.List = append(selectStmt.Body.List, clause)
+			for _, clause := range clauses {
+				selectStmt.Body.List = append(selectStmt.Body.List, clause)
+			}
+
 		}
 		if !isLast {
 			selectStmt.Body.List = append(selectStmt.Body.List,

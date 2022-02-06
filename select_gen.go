@@ -2,6 +2,68 @@
 
 package oselect
 
+func Select2[T0, T1 any](p0 Param[T0], p1 Param[T1]) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	}
+}
+func Select2Default[T0, T1 any](p0 Param[T0], p1 Param[T1], df func()) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	default:
+		df()
+	}
+}
 func Recv2[T0, T1 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T1)) {
 	select {
 	case v0 := <-c0:
@@ -82,6 +144,124 @@ func Send2Default[T0, T1 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 func(
 	select {
 	case c0 <- f0():
 	case c1 <- f1():
+	default:
+		df()
+	}
+}
+func Select3[T0, T1, T2 any](p0 Param[T0], p1 Param[T1], p2 Param[T2]) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	}
+}
+func Select3Default[T0, T1, T2 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], df func()) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
 	default:
 		df()
 	}
@@ -226,6 +406,198 @@ func Send3Default[T0, T1, T2 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, f1 f
 	case c0 <- f0():
 	case c1 <- f1():
 	case c2 <- f2():
+	default:
+		df()
+	}
+}
+func Select4[T0, T1, T2, T3 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3]) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	}
+}
+func Select4Default[T0, T1, T2, T3 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], df func()) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
 	default:
 		df()
 	}
@@ -446,6 +818,290 @@ func Send4Default[T0, T1, T2, T3 any](c0 chan<- T0, f0 func() T0, c1 chan<- T1, 
 	case c1 <- f1():
 	case c2 <- f2():
 	case c3 <- f3():
+	default:
+		df()
+	}
+}
+func Select5[T0, T1, T2, T3, T4 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], p4 Param[T4]) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+	}
+}
+func Select5Default[T0, T1, T2, T3, T4 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], p4 Param[T4], df func()) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
 	default:
 		df()
 	}
@@ -758,6 +1414,400 @@ func Send5Default[T0, T1, T2, T3, T4 any](c0 chan<- T0, f0 func() T0, c1 chan<- 
 	case c2 <- f2():
 	case c3 <- f3():
 	case c4 <- f4():
+	default:
+		df()
+	}
+}
+func Select6[T0, T1, T2, T3, T4, T5 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], p4 Param[T4], p5 Param[T5]) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+	}
+}
+func Select6Default[T0, T1, T2, T3, T4, T5 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], p4 Param[T4], p5 Param[T5], df func()) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
 	default:
 		df()
 	}
@@ -1178,6 +2228,528 @@ func Send6Default[T0, T1, T2, T3, T4, T5 any](c0 chan<- T0, f0 func() T0, c1 cha
 	case c3 <- f3():
 	case c4 <- f4():
 	case c5 <- f5():
+	default:
+		df()
+	}
+}
+func Select7[T0, T1, T2, T3, T4, T5, T6 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], p4 Param[T4], p5 Param[T5], p6 Param[T6]) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+	}
+}
+func Select7Default[T0, T1, T2, T3, T4, T5, T6 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], p4 Param[T4], p5 Param[T5], p6 Param[T6], df func()) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
 	default:
 		df()
 	}
@@ -1722,6 +3294,674 @@ func Send7Default[T0, T1, T2, T3, T4, T5, T6 any](c0 chan<- T0, f0 func() T0, c1
 	case c4 <- f4():
 	case c5 <- f5():
 	case c6 <- f6():
+	default:
+		df()
+	}
+}
+func Select8[T0, T1, T2, T3, T4, T5, T6, T7 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], p4 Param[T4], p5 Param[T5], p6 Param[T6], p7 Param[T7]) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+		return
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+	case p7.
+		SendChan <- p7.
+		SendFunc():
+	case v7, ok := <-p7.
+		RecvChan:
+		p7.
+			RecvFunc(v7, ok)
+	}
+}
+func Select8Default[T0, T1, T2, T3, T4, T5, T6, T7 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], p4 Param[T4], p5 Param[T5], p6 Param[T6], p7 Param[T7], df func()) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+		return
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+	case p7.
+		SendChan <- p7.
+		SendFunc():
+	case v7, ok := <-p7.
+		RecvChan:
+		p7.
+			RecvFunc(v7, ok)
 	default:
 		df()
 	}
@@ -2406,6 +4646,838 @@ func Send8Default[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 chan<- T0, f0 func() T0
 	case c5 <- f5():
 	case c6 <- f6():
 	case c7 <- f7():
+	default:
+		df()
+	}
+}
+func Select9[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], p4 Param[T4], p5 Param[T5], p6 Param[T6], p7 Param[T7], p8 Param[T8]) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+		return
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+		return
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+		return
+	case p7.
+		SendChan <- p7.
+		SendFunc():
+		return
+	case v7, ok := <-p7.
+		RecvChan:
+		p7.
+			RecvFunc(v7, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+	case p7.
+		SendChan <- p7.
+		SendFunc():
+	case v7, ok := <-p7.
+		RecvChan:
+		p7.
+			RecvFunc(v7, ok)
+	case p8.
+		SendChan <- p8.
+		SendFunc():
+	case v8, ok := <-p8.
+		RecvChan:
+		p8.
+			RecvFunc(v8, ok)
+	}
+}
+func Select9Default[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](p0 Param[T0], p1 Param[T1], p2 Param[T2], p3 Param[T3], p4 Param[T4], p5 Param[T5], p6 Param[T6], p7 Param[T7], p8 Param[T8], df func()) {
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+		return
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+		return
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+		return
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+		return
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+		return
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+		return
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+		return
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+		return
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+		return
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+		return
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+		return
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+		return
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+		return
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+		return
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+		return
+	case p7.
+		SendChan <- p7.
+		SendFunc():
+		return
+	case v7, ok := <-p7.
+		RecvChan:
+		p7.
+			RecvFunc(v7, ok)
+		return
+	default:
+	}
+	select {
+	case p0.
+		SendChan <- p0.
+		SendFunc():
+	case v0, ok := <-p0.
+		RecvChan:
+		p0.
+			RecvFunc(v0, ok)
+	case p1.
+		SendChan <- p1.
+		SendFunc():
+	case v1, ok := <-p1.
+		RecvChan:
+		p1.
+			RecvFunc(v1, ok)
+	case p2.
+		SendChan <- p2.
+		SendFunc():
+	case v2, ok := <-p2.
+		RecvChan:
+		p2.
+			RecvFunc(v2, ok)
+	case p3.
+		SendChan <- p3.
+		SendFunc():
+	case v3, ok := <-p3.
+		RecvChan:
+		p3.
+			RecvFunc(v3, ok)
+	case p4.
+		SendChan <- p4.
+		SendFunc():
+	case v4, ok := <-p4.
+		RecvChan:
+		p4.
+			RecvFunc(v4, ok)
+	case p5.
+		SendChan <- p5.
+		SendFunc():
+	case v5, ok := <-p5.
+		RecvChan:
+		p5.
+			RecvFunc(v5, ok)
+	case p6.
+		SendChan <- p6.
+		SendFunc():
+	case v6, ok := <-p6.
+		RecvChan:
+		p6.
+			RecvFunc(v6, ok)
+	case p7.
+		SendChan <- p7.
+		SendFunc():
+	case v7, ok := <-p7.
+		RecvChan:
+		p7.
+			RecvFunc(v7, ok)
+	case p8.
+		SendChan <- p8.
+		SendFunc():
+	case v8, ok := <-p8.
+		RecvChan:
+		p8.
+			RecvFunc(v8, ok)
 	default:
 		df()
 	}
