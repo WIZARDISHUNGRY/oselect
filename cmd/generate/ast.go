@@ -94,25 +94,37 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, 
 				Type:  typeExpr,
 			})
 		} else {
+
 			params.List = append(params.List, &ast.Field{
 				Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("c%d", i))},
 				Type: &ast.ChanType{
 					Dir:   direction,
 					Value: ast.NewIdent(fmt.Sprintf("T%d", i)),
 				},
-			},
-				&ast.Field{
-					Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("f%d", i))},
-					Type: &ast.FuncType{
-						Params: &ast.FieldList{
-							List: fxnArgs,
-						},
-						Results: &ast.FieldList{
-							List: results,
+			})
+
+			if fxnType == typeRecv {
+				params.List = append(params.List,
+					&ast.Field{
+						Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("f%d", i))},
+						Type: &ast.FuncType{
+							Params: &ast.FieldList{
+								List: fxnArgs,
+							},
+							Results: &ast.FieldList{
+								List: results,
+							},
 						},
 					},
-				},
-			)
+				)
+			} else {
+				typeExpr := mustParseExp(fmt.Sprintf("T%d", i))
+
+				params.List = append(params.List, &ast.Field{
+					Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("v%d", i))},
+					Type:  typeExpr,
+				})
+			}
 		}
 
 		typeParams.Names = append(typeParams.Names, ast.NewIdent(fmt.Sprintf("T%d", i)))
@@ -136,9 +148,7 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, 
 					Comm: &ast.AssignStmt{
 						Lhs: []ast.Expr{channel},
 						Tok: token.ARROW,
-						Rhs: []ast.Expr{&ast.CallExpr{
-							Fun: fxn,
-						}},
+						Rhs: []ast.Expr{mustParseExp(fmt.Sprintf("v%d", j))},
 					},
 				}}
 			} else if fxnType == typeRecv {
@@ -160,7 +170,7 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, 
 					Comm: &ast.AssignStmt{
 						Lhs: []ast.Expr{mustParseExp(param + ".SendChan")},
 						Tok: token.ARROW,
-						Rhs: []ast.Expr{mustParseExp(param + ".SendFunc()")},
+						Rhs: []ast.Expr{mustParseExp(param + ".SendValue")},
 					},
 				}, {
 					Comm: &ast.AssignStmt{

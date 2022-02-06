@@ -1,43 +1,42 @@
 # Ordered Select
 
 This implements [deterministic `select`](https://www.sethvargo.com/what-id-like-to-see-in-go-2/#deterministic-select) for go1.18+.
-Two to 9 channels, plus a default case are suppported. It utilizes the AST for code generation & 1.18 generics to allow reading from
+Two to 9 channels, plus a default case, are suppported. It utilizes the `ast` package for code generation & 1.18 generics to allow reading from
 arbitrary channel types.
 
 [![Go Reference](https://pkg.go.dev/badge/jonwillia.ms/oselect.svg)](https://pkg.go.dev/jonwillia.ms/oselect)
 
 ## FAQ
 
-1. Why can't you mix and match sends and receives?
+1. Can I mix and match sends and receives?
 
-    While we could generate functions for every permutation of send and receives, the function naming would be even
-    more unwieldy. e.g. `Send_Send_Send_RecvOK_Default`. It could be possible to make each of the args a struct:
-
-    ```go
-    type Param[T any] struct {
-        RecvChan <-chan T
-        RecvFunc func(T, bool)
-        SendChan chan<- T
-        SendFunc func() T
-    }
-    ```
-
-    and rely on the fact that `select`ing on the nil channels will never unblock. The calling syntax for this would be even more
-    labourous, even with convenience helpers:
-
-    ```go
-    oselect.Select4(
-        oselect.Recv(ctx.Done(), doneCallback),
-        oselect.Recv(uiMessages, dispatchEvent),
-        oselect.Recv(ircMessages, dispatchIRC),
-        oselect.Recv(twitterMessages, dispatchTwitter),
-        oselect.Send(metricsChan, getMetrics),
-    )
-    ```
-
-    I don't hate this as much as I originally expected. Performance implications TBD!
+    Use the `Select` family of functions.
 
 2. Would [variadic templates](https://www.ibm.com/docs/en/zos/2.1.0?topic=only-variadic-templates-c11)
 remove the need for generating a function for every N-terms?
 
     No, because there's no way to generate a `select` block for an arbitrary number of of channels at compile time.
+
+3. Which functions perform best?
+
+    The `Recv`/`Send` families appear to be faster that the general purpose `Select` family.
+
+    ```
+    goos: linux
+    goarch: amd64
+    pkg: jonwillia.ms/oselect
+    cpu: AMD Ryzen 7 2700X Eight-Core Processor         
+    BenchmarkRecv4Default-16                   	 5048630	       231.2 ns/op
+    BenchmarkSelect4Default_Recv-16            	 2219570	       540.8 ns/op
+    BenchmarkSelect4Default_Recv_preroll-16    	 4139517	       283.0 ns/op
+    Benchmark_select_4_default-16              	 5320692	       221.4 ns/op
+    BenchmarkRecv4-16                          	 4550605	       257.0 ns/op
+    BenchmarkSelect4_Recv-16                   	 2092376	       563.5 ns/op
+    BenchmarkSelect4_RecvOK-16                 	 3795602	       306.6 ns/op
+    BenchmarkSelect4_Recv_preroll-16           	 3774952	       316.1 ns/op
+    Benchmark_select_4-16                      	 4616817	       252.6 ns/op
+    ```
+
+4. The generated code for the `Select` functions is ugly.
+
+    That isn't a question!

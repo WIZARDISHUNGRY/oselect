@@ -4,8 +4,14 @@ import (
 	"testing"
 )
 
+//go:noinline
 func nothing(int) { panic("i shall never be called") }
-func nada()       {}
+
+//go:noinline
+func nothingOK(int, bool) { panic("i shall never be called, ok?") }
+
+//go:noinline
+func nada() {}
 
 func BenchmarkRecv4Default(b *testing.B) {
 	chan0 := make(chan int)
@@ -70,28 +76,28 @@ func Benchmark_select_4_default(b *testing.B) {
 		select {
 		case v0 := <-chan0:
 			nothing(v0)
-			return
+			continue
 		default:
 		}
 		select {
 		case v0 := <-chan0:
 			nothing(v0)
-			return
+			continue
 		case v1 := <-chan1:
 			nothing(v1)
-			return
+			continue
 		default:
 		}
 		select {
 		case v0 := <-chan0:
 			nothing(v0)
-			return
+			continue
 		case v1 := <-chan1:
 			nothing(v1)
-			return
+			continue
 		case v2 := <-chan2:
 			nothing(v2)
-			return
+			continue
 		default:
 		}
 		select {
@@ -128,6 +134,60 @@ func BenchmarkRecv4(b *testing.B) {
 	}
 }
 
+func BenchmarkSelect4_Recv(b *testing.B) {
+	chan0 := make(chan int)
+	chan1 := make(chan int)
+	chan2 := make(chan int)
+	chan3 := make(chan int, 1)
+
+	for n := 0; n < b.N; n++ {
+
+		chan3 <- 1
+		Select4(
+			Recv(chan0, nothing),
+			Recv(chan1, nothing),
+			Recv(chan2, nothing),
+			Recv(chan3, func(int) {}),
+		)
+	}
+}
+
+func BenchmarkSelect4_RecvOK(b *testing.B) {
+	chan0 := make(chan int)
+	chan1 := make(chan int)
+	chan2 := make(chan int)
+	chan3 := make(chan int, 1)
+
+	for n := 0; n < b.N; n++ {
+
+		chan3 <- 1
+		Select4(
+			RecvOK(chan0, nothingOK),
+			RecvOK(chan1, nothingOK),
+			RecvOK(chan2, nothingOK),
+			RecvOK(chan3, func(int, bool) {}),
+		)
+	}
+}
+
+func BenchmarkSelect4_Recv_preroll(b *testing.B) {
+	chan0 := make(chan int)
+	chan1 := make(chan int)
+	chan2 := make(chan int)
+	chan3 := make(chan int, 1)
+
+	r0 := Recv(chan0, nothing)
+	r1 := Recv(chan1, nothing)
+	r2 := Recv(chan2, nothing)
+	r3 := Recv(chan3, func(int) {})
+
+	for n := 0; n < b.N; n++ {
+
+		chan3 <- 1
+		Select4(r0, r1, r2, r3)
+	}
+}
+
 func Benchmark_select_4(b *testing.B) {
 	chan0 := make(chan int)
 	chan1 := make(chan int)
@@ -142,28 +202,28 @@ func Benchmark_select_4(b *testing.B) {
 		select {
 		case v0 := <-chan0:
 			nothing(v0)
-			return
+			continue
 		default:
 		}
 		select {
 		case v0 := <-chan0:
 			nothing(v0)
-			return
+			continue
 		case v1 := <-chan1:
 			nothing(v1)
-			return
+			continue
 		default:
 		}
 		select {
 		case v0 := <-chan0:
 			nothing(v0)
-			return
+			continue
 		case v1 := <-chan1:
 			nothing(v1)
-			return
+			continue
 		case v2 := <-chan2:
 			nothing(v2)
-			return
+			continue
 		default:
 		}
 		select {
