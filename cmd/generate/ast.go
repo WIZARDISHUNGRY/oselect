@@ -10,11 +10,21 @@ import (
 
 // TODO: use parser.ParseExpr() to make this more readable
 
-func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, isSend bool) *ast.FuncDecl {
+type functionType int
+
+const (
+	typeRecv = iota
+	typeSend
+	typeSelect
+)
+
+func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, fxnType functionType) *ast.FuncDecl {
 	defaultFunction := ast.NewIdent("df")
 
-	if isSend && withOk {
-		panic("isSend && withOk")
+	isSend := fxnType == typeSend
+
+	if fxnType != typeRecv && withOk {
+		panic("fxnType != typeRecv && withOk")
 	}
 
 	direction := ast.ChanDir(ast.RECV)

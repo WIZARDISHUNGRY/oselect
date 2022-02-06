@@ -46,14 +46,18 @@ func main() {
 
 			c.Delete()
 			for i := 2; i <= MAX_CHANNELS; i++ {
+				// Select
+				c.InsertBefore(genSelectCall(c, i, false, false, typeSelect))
+				c.InsertBefore(genSelectCall(c, i, true, false, typeSelect))
+				continue
 				// Recv
-				c.InsertBefore(genSelectCall(c, i, false, false, false))
-				c.InsertBefore(genSelectCall(c, i, true, false, false))
-				c.InsertBefore(genSelectCall(c, i, false, true, false))
-				c.InsertBefore(genSelectCall(c, i, true, true, false))
+				c.InsertBefore(genSelectCall(c, i, false, false, typeRecv))
+				c.InsertBefore(genSelectCall(c, i, true, false, typeRecv))
+				c.InsertBefore(genSelectCall(c, i, false, true, typeRecv))
+				c.InsertBefore(genSelectCall(c, i, true, true, typeRecv))
 				// Send
-				c.InsertBefore(genSelectCall(c, i, false, false, true))
-				c.InsertBefore(genSelectCall(c, i, true, false, true))
+				c.InsertBefore(genSelectCall(c, i, false, false, typeSend))
+				c.InsertBefore(genSelectCall(c, i, true, false, typeSend))
 			}
 		}
 
