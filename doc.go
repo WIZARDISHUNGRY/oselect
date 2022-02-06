@@ -51,7 +51,7 @@
 				Recv4(
 					ctx.Done(), func() { done = true },
 					uiMessages, dispatchEvent,
-					ircMessages, uiMessages,
+					ircMessages, dispatchIRC,
 					twitterMessages, dispatchTwitter,
 				)
 				if done {
@@ -61,5 +61,6 @@
 		}
 
 	Whether or not this is useful is left as an exercise to the reader.
+
 */
 package oselect

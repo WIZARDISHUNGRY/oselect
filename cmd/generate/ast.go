@@ -8,6 +8,8 @@ import (
 	"golang.org/x/tools/go/ast/astutil"
 )
 
+// TODO: use parser.ParseExpr() to make this more readable
+
 func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, isSend bool) *ast.FuncDecl {
 	defaultFunction := ast.NewIdent("df")
 
@@ -22,13 +24,14 @@ func genSelectCall(c *astutil.Cursor, count int, withDefault bool, withOk bool, 
 		direction = ast.SEND
 		name = "Send"
 	}
+	if withOk {
+		name += "OK"
+	}
+
 	name = fmt.Sprintf("%s%d", name, count)
 
 	if withDefault {
 		name += "Default"
-	}
-	if withOk {
-		name += "OK"
 	}
 
 	body := &ast.BlockStmt{}

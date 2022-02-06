@@ -32,7 +32,7 @@ func Recv2Default[T0, T1 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 func(T
 		df()
 	}
 }
-func Recv2OK[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool)) {
+func RecvOK2[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -46,7 +46,7 @@ func Recv2OK[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(
 		f1(v1, ok)
 	}
 }
-func Recv2DefaultOK[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), df func()) {
+func RecvOK2Default[T0, T1 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -138,7 +138,7 @@ func Recv3Default[T0, T1, T2 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f1 fu
 		df()
 	}
 }
-func Recv3OK[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool)) {
+func RecvOK3[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -163,7 +163,7 @@ func Recv3OK[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 f
 		f2(v2, ok)
 	}
 }
-func Recv3DefaultOK[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), df func()) {
+func RecvOK3Default[T0, T1, T2 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -310,7 +310,7 @@ func Recv4Default[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0), c1 <-chan T1, f
 		df()
 	}
 }
-func Recv4OK[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool)) {
+func RecvOK4[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -349,7 +349,7 @@ func Recv4OK[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, 
 		f3(v3, ok)
 	}
 }
-func Recv4DefaultOK[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), df func()) {
+func RecvOK4Default[T0, T1, T2, T3 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -564,7 +564,7 @@ func Recv5Default[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0), c1 <-chan T
 		df()
 	}
 }
-func Recv5OK[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool)) {
+func RecvOK5[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -620,7 +620,7 @@ func Recv5OK[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan 
 		f4(v4, ok)
 	}
 }
-func Recv5DefaultOK[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), df func()) {
+func RecvOK5Default[T0, T1, T2, T3, T4 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -916,7 +916,7 @@ func Recv6Default[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0), c1 <-ch
 		df()
 	}
 }
-func Recv6OK[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool)) {
+func RecvOK6[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -992,7 +992,7 @@ func Recv6OK[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool), c1 <-c
 		f5(v5, ok)
 	}
 }
-func Recv6DefaultOK[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), df func()) {
+func RecvOK6Default[T0, T1, T2, T3, T4, T5 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -1382,7 +1382,7 @@ func Recv7Default[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0), c1 
 		df()
 	}
 }
-func Recv7OK[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool)) {
+func RecvOK7[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -1481,7 +1481,7 @@ func Recv7OK[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, bool), c1
 		f6(v6, ok)
 	}
 }
-func Recv7DefaultOK[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), df func()) {
+func RecvOK7Default[T0, T1, T2, T3, T4, T5, T6 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -1978,7 +1978,7 @@ func Recv8Default[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0),
 		df()
 	}
 }
-func Recv8OK[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool)) {
+func RecvOK8[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -2103,7 +2103,7 @@ func Recv8OK[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0, bool)
 		f7(v7, ok)
 	}
 }
-func Recv8DefaultOK[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), df func()) {
+func RecvOK8Default[T0, T1, T2, T3, T4, T5, T6, T7 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -2720,7 +2720,7 @@ func Recv9Default[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(
 		df()
 	}
 }
-func Recv9OK[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), c8 <-chan T8, f8 func(T8, bool)) {
+func RecvOK9[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), c8 <-chan T8, f8 func(T8, bool)) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
@@ -2874,7 +2874,7 @@ func Recv9OK[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0, b
 		f8(v8, ok)
 	}
 }
-func Recv9DefaultOK[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), c8 <-chan T8, f8 func(T8, bool), df func()) {
+func RecvOK9Default[T0, T1, T2, T3, T4, T5, T6, T7, T8 any](c0 <-chan T0, f0 func(T0, bool), c1 <-chan T1, f1 func(T1, bool), c2 <-chan T2, f2 func(T2, bool), c3 <-chan T3, f3 func(T3, bool), c4 <-chan T4, f4 func(T4, bool), c5 <-chan T5, f5 func(T5, bool), c6 <-chan T6, f6 func(T6, bool), c7 <-chan T7, f7 func(T7, bool), c8 <-chan T8, f8 func(T8, bool), df func()) {
 	select {
 	case v0, ok := <-c0:
 		f0(v0, ok)
