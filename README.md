@@ -6,6 +6,11 @@ arbitrary channel types.
 
 [![Go Reference](https://pkg.go.dev/badge/jonwillia.ms/oselect.svg)](https://pkg.go.dev/jonwillia.ms/oselect)
 
+To get started:
+
+`go get jonwillia.ms/oselect`
+
+
 ## FAQ
 
 1. Can I mix and match sends and receives?
@@ -40,3 +45,7 @@ remove the need for generating a function for every N-terms?
 4. The generated code for the `Select` functions is ugly.
 
     That isn't a question!
+
+5. Doesn't `select` just use [`runtime.Select`](https://pkg.go.dev/reflect#Select)'s `rselect` under the hood anyway?
+
+    No idea! I should look into this.

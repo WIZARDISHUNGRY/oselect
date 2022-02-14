@@ -22,7 +22,6 @@ func main() {
 		fmt.Println(args)
 		panic("takes zero or one args")
 	}
-
 	fset := token.NewFileSet()
 
 	f, err := parser.ParseFile(fset, "template", template,
