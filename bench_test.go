@@ -1,6 +1,7 @@
 package oselect
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -113,6 +114,64 @@ func Benchmark_select_4_default(b *testing.B) {
 			nada()
 		}
 	}
+}
+
+func Benchmark_reflectDotSelect_4_default_preroll(b *testing.B) {
+	chan0 := make(chan int)
+	chan1 := make(chan int)
+	chan2 := make(chan int)
+	chan3 := make(chan int)
+	def := reflect.SelectCase{Dir: reflect.SelectDefault}
+	cases0 := []reflect.SelectCase{
+		{
+			Dir:  reflect.SelectRecv,
+			Chan: reflect.ValueOf(chan0),
+		},
+		def,
+	}
+	cases1 := append([]reflect.SelectCase{}, cases0[0:1]...)
+	cases1 = append(cases1, reflect.SelectCase{
+		Dir:  reflect.SelectRecv,
+		Chan: reflect.ValueOf(chan1),
+	},
+		def)
+	cases2 := append([]reflect.SelectCase{}, cases1[0:2]...)
+	cases2 = append(cases2, reflect.SelectCase{
+		Dir:  reflect.SelectRecv,
+		Chan: reflect.ValueOf(chan2),
+	},
+		def)
+	cases3 := append([]reflect.SelectCase{}, cases2[0:3]...)
+	cases3 = append(cases3, reflect.SelectCase{
+		Dir:  reflect.SelectRecv,
+		Chan: reflect.ValueOf(chan3),
+	},
+		def)
+
+	for n := 0; n < b.N; n++ {
+		chosen, v, _ := reflect.Select(cases0)
+		if chosen <= 0 {
+			nothing(int(v.Int()))
+			continue
+		}
+		chosen, v, _ = reflect.Select(cases1)
+		if chosen <= 1 {
+			nothing(int(v.Int()))
+			continue
+		}
+		chosen, v, _ = reflect.Select(cases2)
+		if chosen <= 2 {
+			nothing(int(v.Int()))
+			continue
+		}
+		chosen, v, _ = reflect.Select(cases3)
+		if chosen < 3 {
+			nothing(int(v.Int()))
+			continue
+		}
+		nada()
+	}
+
 }
 
 func BenchmarkRecv4(b *testing.B) {

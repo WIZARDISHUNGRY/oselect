@@ -27,25 +27,37 @@ remove the need for generating a function for every N-terms?
     The `Recv`/`Send` families appear to be faster that the general purpose `Select` family.
 
     ```
+    go test -benchmem -bench '.'                                                                 main  ✭
     goos: linux
     goarch: amd64
     pkg: jonwillia.ms/oselect
     cpu: AMD Ryzen 7 2700X Eight-Core Processor         
-    BenchmarkRecv4Default-16                   	 5048630	       231.2 ns/op
-    BenchmarkSelect4Default_Recv-16            	 2219570	       540.8 ns/op
-    BenchmarkSelect4Default_Recv_preroll-16    	 4139517	       283.0 ns/op
-    Benchmark_select_4_default-16              	 5320692	       221.4 ns/op
-    BenchmarkRecv4-16                          	 4550605	       257.0 ns/op
-    BenchmarkSelect4_Recv-16                   	 2092376	       563.5 ns/op
-    BenchmarkSelect4_RecvOK-16                 	 3795602	       306.6 ns/op
-    BenchmarkSelect4_Recv_preroll-16           	 3774952	       316.1 ns/op
-    Benchmark_select_4-16                      	 4616817	       252.6 ns/op
+    BenchmarkRecv4Default-16                           	 4983958	       236.3 ns/op	       0 B/op	       0 allocs/op
+    BenchmarkSelect4Default_Recv-16                    	 2180769	       540.7 ns/op	      96 B/op	       4 allocs/op
+    BenchmarkSelect4Default_Recv_preroll-16            	 4211283	       280.6 ns/op	       0 B/op	       0 allocs/op
+    Benchmark_select_4_default-16                      	 5084107	       228.1 ns/op	       0 B/op	       0 allocs/op
+    Benchmark_reflectDotSelect_4_default_preroll-16    	  592192	      2014 ns/op	     632 B/op	      23 allocs/op
+    BenchmarkRecv4-16                                  	 4384048	       256.5 ns/op	       0 B/op	       0 allocs/op
+    BenchmarkSelect4_Recv-16                           	 1925407	       585.1 ns/op	      96 B/op	       4 allocs/op
+    BenchmarkSelect4_RecvOK-16                         	 3690008	       323.5 ns/op	       0 B/op	       0 allocs/op
+    BenchmarkSelect4_Recv_preroll-16                   	 3730765	       316.2 ns/op	       0 B/op	       0 allocs/op
+    Benchmark_select_4-16                              	 4705082	       255.5 ns/op	       0 B/op	       0 allocs/op
+    PASS
+    ok  	jonwillia.ms/oselect	14.923s
     ```
 
 4. The generated code for the `Select` functions is ugly.
 
     That isn't a question!
 
-5. Doesn't `select` just use [`runtime.Select`](https://pkg.go.dev/reflect#Select)'s `rselect` under the hood anyway?
+5. Doesn't `select` just use [`selectgo`](https://go.dev/src/runtime/select.go#L121) under the hood anyway?
+Why not use [`reflect.Select`](https://pkg.go.dev/reflect#Select)?
 
-    No idea! I should look into this.
+    I believe it does. It looks like the compiler uses looping constructs under the hood for non-trivial cases.
+
+    ```go
+	// The compiler rewrites selects that statically have
+	// only 0 or 1 cases plus default into simpler constructs.
+    ```
+
+    Check out the benchmark for `Benchmark_reflectDotSelect_4_default_preroll`. Oof!
