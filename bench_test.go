@@ -148,6 +148,10 @@ func Benchmark_reflectDotSelect_4_default_preroll(b *testing.B) {
 	},
 		def)
 
+	if len(cases3) != 5 {
+		b.Fatalf("5 select cases, got %d", len(cases3))
+	}
+
 	for n := 0; n < b.N; n++ {
 		chosen, v, _ := reflect.Select(cases0)
 		if chosen <= 0 {
